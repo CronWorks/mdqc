@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+# sudo apt-get install python-pyside libimage-exiftool-perl mediainfo
+
 # MDQC GUI (OSX)
 # Version 0.1, 2013-10-28
 # Copyright (c) 2013 AudioVisual Preservation Solutions
@@ -98,20 +102,16 @@ class MainWin(QMainWindow):
         self.setCentralWidget(self.widget)
         self.about_mdqc_gui = AboutMDQCGUI.AboutMDQCGUI(self)
         try:
-            self.setWindowIcon(QIcon(path.join(getcwd() + str(sep), 'assets'+str(sep)+'avpreserve-2.png')))
+            self.setWindowIcon(QIcon(path.join(getcwd() + str(sep), 'assets' + str(sep) + 'avpreserve-2.png')))
         except:
-            try:
-                self.setWindowIcon(QIcon(path.join(sys._MEIPASS, 'assets' + (str(sep)) + 'avpreserve-2.png')))
-            except:
-                pass
             pass
 
 
-        self.setWindowTitle(self.configuration.getApplicationName() +' '+ self.configuration.getApplicationVersion())
+        self.setWindowTitle(self.configuration.getApplicationName() + ' ' + self.configuration.getApplicationVersion())
 
     # Checking for exif Tool and media Info tool if any single of these tool don't exists it will exit the Application
     def checkForTool(self):
-        
+
         exif_tool_found = True
         exif_not_found_msg = "ExifTool not found. Please download the .dmg from the following url and install: <a href='http://www.sno.phy.queensu.ca/~phil/exiftool/'>http://www.sno.phy.queensu.ca/~phil/exiftool/</a>"
         mediainfo_not_found_msg = "MediaInfo not found. Please download the CLI version from the following url and install: <a href='http://mediaarea.net/en-us/MediaInfo/Download/Mac_OS'>http://mediaarea.net/en-us/MediaInfo/Download/Mac_OS</a>"
@@ -139,7 +139,7 @@ class MainWin(QMainWindow):
         if exif_tool_found is False and media_info_found is False:
             QMessageBox.critical(self,
                                  None,
-                                str(exif_not_found_msg) + ' <br/> <br/>' + str(mediainfo_not_found_msg) )
+                                str(exif_not_found_msg) + ' <br/> <br/>' + str(mediainfo_not_found_msg))
             return False
 
 
@@ -154,7 +154,7 @@ class MainWin(QMainWindow):
         elif media_info_found is False:
             QMessageBox.critical(self,
                                  None,
-                                 mediainfo_not_found_msg )
+                                 mediainfo_not_found_msg)
             return False
 
         return True
@@ -244,7 +244,7 @@ class MainWin(QMainWindow):
                 ops.append(o)
             elif rgx:
                 data = line.split('\t')
-                regexes.append((data[0],data[1],re.compile(data[2].rstrip())))
+                regexes.append((data[0], data[1], re.compile(data[2].rstrip())))
 
     def reportDir(self):
         global reportdir
@@ -361,7 +361,7 @@ class TagRuleWin(QWidget):
         row.addWidget(vals[r])
         row.addWidget(adds[r])
 
-        self.slayout.insertLayout(r+1, row)
+        self.slayout.insertLayout(r + 1, row)
 
     # purges empty (no comparator set) rows from global arrays
     def closeEvent(self, event):
@@ -409,7 +409,7 @@ class DirRuleWin(QWidget):
 
     def dupeRow(self):
         num = self.add.index(self.sender())
-        self.addRow(self.op[num].currentIndex(), self.val[num].text(), num+1)
+        self.addRow(self.op[num].currentIndex(), self.val[num].text(), num + 1)
 
     def addRow(self, oper, value, r):
         op = QComboBox()
@@ -433,7 +433,7 @@ class DirRuleWin(QWidget):
         row.addWidget(self.val[r])
         row.addWidget(self.add[r])
 
-        self.dlayout.insertLayout(r+1, row)
+        self.dlayout.insertLayout(r + 1, row)
 
     def sendOut(self):
         del regexes[0:len(regexes)]
@@ -453,7 +453,7 @@ class DirRuleWin(QWidget):
                 if self.op[n].currentIndex() == 6:
                     regexes.append((6, v, re.compile(v + "$")))
         self.close()
-		
+
 # window to display test results
 class Scanner(QWidget):
 
@@ -494,7 +494,7 @@ class Scanner(QWidget):
 
     def test(self):
 
-        rpath = reportdir +str(sep) + "report_" + \
+        rpath = reportdir + str(sep) + "report_" + \
         str(datetime.datetime.now()).replace(' ', '').replace(':', '').\
                 replace('-', '').rpartition('.')[0] + ".tsv"
         report = open(rpath, 'w')
@@ -573,7 +573,7 @@ class Scanner(QWidget):
         QCoreApplication.processEvents()
         out = ""
         fails = 0
-        logging.basicConfig(filename=reportdir+"mdqc.log", level=logging.INFO)
+        logging.basicConfig(filename=reportdir + "mdqc.log", level=logging.INFO)
         # logging.basicConfig(filename="mdqc.log", level=logging.INFO)
 
         for rf in fls:
