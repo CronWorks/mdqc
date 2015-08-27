@@ -206,7 +206,9 @@ class MainWin(QMainWindow):
         del ops[:]
         del vals[:]
         del regexes[:]
-        src = QFileDialog.getOpenFileName(dir=sys.executable[:sys.executable.rfind('/')] + "/../../../../", filter='MDQC Template (*.tpl)')[0]
+        workingDir = sys.executable[:sys.executable.rfind('/')] + "/../../../../"
+        openFiles = QFileDialog.getOpenFileName(dir=workingDir, filter='MDQC Template (*.tpl)')
+        src = openFiles[0]
         f = open(src, 'r')
         rgx = False
         lines = f.readlines()
